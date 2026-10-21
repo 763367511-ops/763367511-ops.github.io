@@ -1,0 +1,54 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>雷量宇的第一个编程里程碑</title><style>
+:root{--navy:#14275f;--navy2:#0b1840;--gold:#e6c78a;--gold2:#b8892b;--orange:#f57f2e;--cream:#fbf6e6;--ink:#1b2f6b;--mute:#8b8672}
+*{box-sizing:border-box;margin:0;padding:0}html,body{height:100%;background:#0b1840;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;color:var(--ink)}
+#wrap{height:100dvh;overflow-y:scroll;scroll-snap-type:y mandatory;scroll-behavior:smooth;max-width:520px;margin:0 auto}
+.page{height:100dvh;scroll-snap-align:start;position:relative;padding:8vh 28px 6vh;display:flex;flex-direction:column;justify-content:center;background:var(--cream);overflow:hidden}
+.page.dark{background:radial-gradient(120% 90% at 50% 0%,#1e3a8a 0%,var(--navy) 45%,var(--navy2) 100%);color:#fff}
+.tag{position:absolute;top:5vh;left:28px;font-size:13px;letter-spacing:.2em;color:var(--gold2)}.dark .tag{color:var(--gold)}
+.no{font-size:14px;color:var(--orange);font-weight:700;letter-spacing:.1em;margin-bottom:6px}
+h1{font-family:"Songti SC","Noto Serif SC",serif;font-size:36px;line-height:1.25;font-weight:800}h1 em{font-style:normal;color:var(--gold)}
+h2{font-size:28px;line-height:1.3;font-weight:800;margin-bottom:12px}
+.sub{color:var(--mute);font-size:14px;margin-top:8px;line-height:1.7}.dark .sub{color:#b9c4e8}
+.rule{width:44px;height:2px;background:var(--gold);margin:18px 0}
+.stats{display:flex;gap:0;margin-top:22px}.stat{flex:1;text-align:center;padding:6px 0;border-left:1px solid rgba(0,0,0,.08)}.stat:first-child{border:0}.dark .stat{border-color:rgba(255,255,255,.2)}
+.stat b{display:block;font-size:44px;line-height:1.1;color:var(--orange);font-family:"Songti SC",Georgia,serif}.dark .stat b{color:var(--gold)}.stat span{font-size:13px;color:var(--mute)}.dark .stat span{color:#b9c4e8}
+.hint{position:absolute;bottom:3vh;left:0;right:0;text-align:center;font-size:12px;color:var(--mute);animation:bob 1.6s infinite}.dark .hint{color:#8d9bd0}
+@keyframes bob{50%{transform:translateY(6px)}}
+.card{background:#fff;border-radius:16px;padding:16px 18px;margin:8px 0;box-shadow:0 6px 18px rgba(184,137,43,.12);display:flex;gap:14px;align-items:flex-start}
+.card i{font-style:normal;font-size:30px}.card b{font-size:16px;display:block;margin-bottom:3px}.card p{font-size:13px;color:#6c6a5d;line-height:1.6}
+.card p b{display:inline;font-size:inherit;margin:0;color:var(--orange)}
+.card.locked{opacity:.45}
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:14px}
+.dot{aspect-ratio:1;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;background:#fff;border:1.5px dashed #d8cfae;color:#aaa}
+.dot.g{background:linear-gradient(135deg,#f6dd9c,#e8b84d);border:0;color:#6b4a07;font-weight:700}.dot.o{background:#ffe3c9;border:0;color:#a2501a;font-weight:700}
+.dot small{font-size:10px;opacity:.75}
+.legend{display:flex;gap:14px;font-size:12px;color:var(--mute);margin-top:12px}
+.pills .pill{background:#fceac4;border-radius:30px;padding:12px 20px;margin:9px 0;text-align:center}.pill b{display:block;color:#9a6b12;font-size:18px}.pill span{font-size:12px;color:#8a6a2a}
+.pill.gold{background:linear-gradient(135deg,#f9e3a3,#efc35b)}
+.route{position:relative;margin:6px 0 0 8px;padding-left:26px;border-left:3px solid #e7d9a8}
+.st{position:relative;margin:0 0 17px}.st:before{content:"";position:absolute;left:-36px;top:3px;width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid #e7d9a8}
+.st.ok:before{background:var(--orange);border-color:var(--orange)}.st.now:before{background:#fff;border-color:var(--orange);box-shadow:0 0 0 5px rgba(245,127,46,.2)}
+.st b{font-size:16px}.st span{font-size:12px;color:var(--mute);display:block}
+.note{font-size:16px;line-height:1.95;color:#2e3a63}.note p{margin-bottom:14px}
+.sign{margin-top:8px;font-weight:700;color:var(--navy)}.sign span{display:block;font-weight:400;color:var(--mute);font-size:13px}
+.ask{margin-top:14px;background:#fff;border-radius:14px;padding:14px 16px;font-size:14px;line-height:1.7;border-left:4px solid var(--orange)}
+.final img{width:100%;max-width:340px;margin:0 auto;display:block;border-radius:12px;box-shadow:0 12px 30px rgba(0,0,0,.4)}
+.final p{text-align:center;color:#b9c4e8;font-size:13px;margin-top:14px}
+.prog{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:520px;height:3px;background:rgba(255,255,255,.15);z-index:9}.prog i{display:block;height:100%;width:0;background:var(--gold);transition:width .3s}
+@media print{#wrap{height:auto;overflow:visible}.page{height:auto;min-height:100vh;page-break-after:always}.prog,.hint{display:none}}
+</style></head><body><div class="prog"><i></i></div><div id="wrap"><section class="page dark"><div class="tag">核桃编程 · 成长纪念册</div>
+<div class="sub" style="color:var(--gold);margin:0 0 12px">致 雷量宇 的爸爸妈妈</div>
+<h1>雷量宇的<br>第一个<em>编程里程碑</em></h1><div class="rule"></div>
+<div class="sub" style="margin:0">本学期学习纪念</div>
+<div class="stats"><div class="stat"><b>17</b><span>次课完成</span></div><div class="stat"><b>4</b><span>个单元</span></div><div class="stat"><b>4</b><span>件项目作品</span></div></div>
+<div class="sub" style="margin-top:28px"><b style="color:#fff">老师</b><br>为雷量宇整理了这段学习时光</div><div class="hint">上滑翻开 ⌄</div></section><section class="page"><div class="tag">01</div><div class="no">01 · 一路走来</div>
+<h2>雷量宇的<br>课堂足迹</h2><div class="sub">每一格是一节课：金色＝作业满分，橙色＝已提交，虚线＝待补。</div>
+<div class="grid"><div class="dot g">L1·1<small>满分</small></div><div class="dot g">L1·2<small>满分</small></div><div class="dot g">L1·3<small>满分</small></div><div class="dot g">L1·4<small>满分</small></div><div class="dot g">L2·1<small>满分</small></div><div class="dot g">L2·2<small>满分</small></div><div class="dot g">L2·3<small>满分</small></div><div class="dot g">L2·4<small>满分</small></div><div class="dot g">L2·5<small>满分</small></div><div class="dot g">L3·1<small>满分</small></div><div class="dot g">L3·2<small>满分</small></div><div class="dot g">L3·3<small>满分</small></div><div class="dot g">L3·4<small>满分</small></div><div class="dot g">L3·5<small>满分</small></div><div class="dot g">L3·6<small>满分</small></div><div class="dot g">L4·1<small>满分</small></div><div class="dot g">L4·2<small>满分</small></div><div class="dot">L4·3<small>待补</small></div></div>
+<div class="legend"><span>🟨 满分</span><span>🟧 已提交</span><span>⬜ 待补</span></div>
+<div class="stats"><div class="stat"><b>17</b><span>次课完成<br>完课率 94.44%</span></div><div class="stat"><b>17</b><span>份作业满分<br>共提交 17 份</span></div><div class="stat"><b>13.7</b><span>小时<br>累计学习</span></div></div><div class="hint">⌄</div></section><section class="page"><div class="tag">02</div><div class="no">02 · 学会的本领</div><h2>学会的4项<br>新本领</h2><div class="card"><i>💬</i><div><b>让电脑按步骤「开口说话」</b><p>写下一行行指令，电脑就照着顺序执行、把结果显示出来</p></div></div><div class="card"><i>🔀</i><div><b>让程序自己做判断</b><p>「如果……就……否则……」，程序会根据情况自己选择</p></div></div><div class="card"><i>🔁</i><div><b>让电脑重复做事</b><p>一句循环，电脑就能做 100 遍也不嫌累——编程最神奇的地方</p></div></div><div class="card"><i>🧮</i><div><b>让电脑记住一排数据</b><p>用数组一次存下很多数，再逐个处理，是通往算法的第一步</p></div></div><div class="hint">⌄</div></section><section class="page"><div class="tag">03</div><div class="no">03 · 动手实践</div><h2>作业、测验<br>和项目</h2>
+<div class="card"><i>⌨️</i><div><b>17 份课后作业</b><p>其中 17 份拿到满分，每一份都有老师批改反馈。</p></div></div>
+<div class="card"><i>💯</i><div><b>随堂测验</b><p>17 次随堂测验中，首次满分 <b>14</b> 次</p></div></div><div class="card"><i>🧩</i><div><b>4 个课堂项目作品</b><p>在 L1–L4 的项目环节里，亲手把想法做成了能运行的作品。</p></div></div>
+<div class="card"><i>💬</i><div><b>课堂互动 24 条</b><p>连麦接通 8 次，班内互动第 12。</p></div></div><div class="hint">⌄</div></section><section class="page"><div class="tag">04</div><div class="no">04 · 荣誉</div><h2>获得的荣誉</h2><div class="pills"><div class="pill gold"><b>⌨️ 作业满分王</b><span>17 份课后作业，全部满分</span></div><div class="pill "><b>💯 测验满分王</b><span>17 次随堂测验，14 次首次满分</span></div><div class="pill "><b>🧩 项目全通关</b><span>完成 4 个课堂项目作品</span></div></div><div class="sub">荣誉依据本期学情数据自动评定</div><div class="hint">⌄</div></section><section class="page"><div class="tag">05</div><div class="no">05 · 下一站</div><h2>C++ 学习路线</h2><div class="sub">上册 · 趣味C++Ⅰ · 基础语法</div><div class="route" style="margin-top:20px"><div class="st ok"><b>✓ L1 变量与输出</b><span>已学</span></div><div class="st ok"><b>✓ L2 条件分支</b><span>已学</span></div><div class="st ok"><b>✓ L3 嵌套循环</b><span>已学</span></div><div class="st ok"><b>✓ L4 数组初识</b><span>已学</span></div><div class="st now"><b>L5 数组 · OJ 解题</b><span>📍 下一站</span></div><div class="st"><b>L6 调试 · 函数</b><span>难点语法 · 算法 · OJ</span></div></div><div class="hint">⌄</div></section><section class="page"><div class="tag">06</div><div class="no">06 · 老师想对您说</div><div class="note"><p>雷量宇这个阶段状态不错～18 节课里完成了 17 节，基本没有落下。</p><p>17 次课后作业里有 17 次拿到满分、随堂测验首次满分 14 次、还亲手做完了 4 个课堂项目作品，每一步都有老师的批改和反馈👏</p><p>接下来的内容会更有挑战一些，卡住的地方我会盯着，差哪补哪。这条路我陪孩子一起走，有什么想法随时跟我说哈💪</p></div><div class="sign">老师<span>核桃编程</span></div>
+<div class="ask">今晚，不妨请雷量宇给您讲讲：<br><b>「这学期做的项目作品，是怎么做出来的？」</b><br>孩子讲得出来，才是真的学会了。</div><div class="hint">⌄</div></section><section class="page dark final"><div class="tag">07</div><div class="no" style="color:var(--gold)">07 · 留个纪念</div><img src="card.png" alt="纪念卡"><p>长按图片保存 · 发给爷爷奶奶也看看<br><br>雷量宇，下一站见！ · 核桃编程</p></section></div><script>const w=document.getElementById('wrap'),bar=document.querySelector('.prog i'),ps=[...document.querySelectorAll('.page')];
+w.addEventListener('scroll',()=>{bar.style.width=Math.min(100,(w.scrollTop/(w.scrollHeight-w.clientHeight))*100)+'%'});
+document.addEventListener('keydown',e=>{if(['ArrowDown','ArrowRight',' '].includes(e.key))w.scrollBy(0,innerHeight);if(['ArrowUp','ArrowLeft'].includes(e.key))w.scrollBy(0,-innerHeight)});</script></body></html>
