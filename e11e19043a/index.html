@@ -35,8 +35,11 @@ h2{font-size:28px;line-height:1.3;font-weight:800;margin-bottom:12px}
 .final img{width:100%;max-width:340px;margin:0 auto;display:block;border-radius:12px;box-shadow:0 12px 30px rgba(0,0,0,.4)}
 .final p{text-align:center;color:#b9c4e8;font-size:13px;margin-top:14px}
 .prog{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:520px;height:3px;background:rgba(255,255,255,.15);z-index:9}.prog i{display:block;height:100%;width:0;background:var(--gold);transition:width .3s}
-@media print{#wrap{height:auto;overflow:visible}.page{height:auto;min-height:100vh;page-break-after:always}.prog,.hint{display:none}}
-</style></head><body><div class="prog"><i></i></div><div id="wrap"><section class="page dark"><div class="tag">核桃编程 · 成长纪念册</div>
+#music{position:fixed;top:14px;right:max(14px,calc(50% - 246px));z-index:10;width:38px;height:38px;border-radius:50%;border:1px solid rgba(230,199,138,.6);background:rgba(11,24,64,.55);color:var(--gold);font-size:18px;line-height:36px;text-align:center;cursor:pointer;backdrop-filter:blur(4px)}
+#music.on{animation:spin 4s linear infinite}#music.off{opacity:.55;text-decoration:line-through}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media print{#wrap{height:auto;overflow:visible}.page{height:auto;min-height:100vh;page-break-after:always}.prog,.hint,#music{display:none}}
+</style></head><body><div class="prog"><i></i></div><button id="music" class="off" aria-label="打开音乐">♪</button><div id="wrap"><section class="page dark"><div class="tag">核桃编程 · 成长纪念册</div>
 <div class="sub" style="color:var(--gold);margin:0 0 12px">致 方辰睿 的爸爸妈妈</div>
 <h1>方辰睿的<br>第一个<em>编程里程碑</em></h1><div class="rule"></div>
 <div class="sub" style="margin:0">本学期学习纪念</div>
@@ -54,4 +57,50 @@ h2{font-size:28px;line-height:1.3;font-weight:800;margin-bottom:12px}
 <div class="sub" style="margin-top:6px">再登 1 站，上册就完整了。上册认全「厨具」，下册<b style="color:var(--ink)">算法进阶</b>才真正「做菜」。</div><div class="hint">⌄</div></section><section class="page"><div class="tag">06</div><div class="no">06 · 老师想对您说</div><div class="note"><p>方辰睿这个阶段学得特别稳～19 次课一次没落下，这份坚持真的很难得。</p><p>19 次课后作业里有 19 次拿到满分、随堂测验首次满分 18 次、还亲手做完了 5 个课堂项目作品，每一步都有老师的批改和反馈👏</p><p>本周起开始学习 L5（数组 · OJ 解题），内容会更有挑战一些，卡住的地方我会盯着，差哪补哪。这条路我陪孩子一起走，有什么想法随时跟我说哈💪</p></div><div class="sign">董玉林老师<span>核桃编程</span></div>
 <div class="ask">今晚，不妨请方辰睿给您讲讲：<br><b>「这学期做的项目作品，是怎么做出来的？」</b><br>孩子讲得出来，才是真的学会了。</div><div class="hint">⌄</div></section><section class="page dark final"><div class="tag">07</div><div class="no" style="color:var(--gold)">07 · 留个纪念</div><img src="card.png" alt="纪念卡"><p>长按图片保存 · 发给爷爷奶奶也看看<br><br>方辰睿，下一站见！ · 核桃编程</p></section></div><script>const w=document.getElementById('wrap'),bar=document.querySelector('.prog i'),ps=[...document.querySelectorAll('.page')];
 w.addEventListener('scroll',()=>{bar.style.width=Math.min(100,(w.scrollTop/(w.scrollHeight-w.clientHeight))*100)+'%'});
-document.addEventListener('keydown',e=>{if(['ArrowDown','ArrowRight',' '].includes(e.key))w.scrollBy(0,innerHeight);if(['ArrowUp','ArrowLeft'].includes(e.key))w.scrollBy(0,-innerHeight)});</script></body></html>
+document.addEventListener('keydown',e=>{if(['ArrowDown','ArrowRight',' '].includes(e.key))w.scrollBy(0,innerHeight);if(['ArrowUp','ArrowLeft'].includes(e.key))w.scrollBy(0,-innerHeight)});</script><script>
+(function(){
+var btn=document.getElementById('music'),ctx=null,master=null,timer=null,on=false,next=0,step=0,started=false;
+var B=0.42; // 每拍秒数
+// 原创八音盒旋律（MIDI 音高，0=休止），每格一拍
+var MEL=[76,79,84,83, 81,79,76,79, 77,81,86,84, 83,79,74,79, 76,79,84,88, 86,84,81,84, 83,79,77,74, 72,0,0,0,
+         72,76,79,76, 81,79,77,76, 74,77,81,79, 79,0,76,74, 72,76,79,84, 83,81,79,77, 76,74,71,74, 72,0,0,0];
+// 每小节和弦根音（低音分解和弦）
+var CH=[[48,55,64],[45,52,60],[41,48,57],[43,50,59],[48,55,64],[45,52,60],[43,50,59],[48,55,60],
+        [48,55,64],[41,48,57],[38,45,53],[43,50,59],[45,52,60],[41,48,57],[43,50,59],[48,55,60]];
+function hz(m){return 440*Math.pow(2,(m-69)/12)}
+function bell(m,t,v,len){
+  [[1,1],[2,.28],[3,.08],[4.2,.04]].forEach(function(p){
+    var o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=hz(m)*p[0];
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v*p[1],t+0.006);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+len/p[0]);
+    o.connect(g);g.connect(master);o.start(t);o.stop(t+len+0.1);});
+}
+function init(){
+  ctx=new (window.AudioContext||window.webkitAudioContext)();
+  master=ctx.createGain();master.gain.value=0.16;
+  var dl=ctx.createDelay(),fb=ctx.createGain(),wet=ctx.createGain();dl.delayTime.value=B*0.75;fb.gain.value=0.28;wet.gain.value=0.3;
+  master.connect(ctx.destination);master.connect(dl);dl.connect(fb);fb.connect(dl);dl.connect(wet);wet.connect(ctx.destination);
+}
+function tick(){
+  while(next<ctx.currentTime+0.6){
+    var i=step%MEL.length,bar=Math.floor(i/4),beat=i%4;
+    if(MEL[i])bell(MEL[i],next,0.55,1.8);
+    var c=CH[bar%CH.length];bell(c[beat%3]+(beat===3?12:0),next,0.22,1.4);
+    if(beat===0)bell(c[0]-12,next,0.18,2.2);
+    next+=B;step++;
+  }
+}
+function play(){
+  if(!ctx)init();
+  if(ctx.state==='suspended')ctx.resume();
+  if(!timer){next=ctx.currentTime+0.1;timer=setInterval(tick,120);tick();}
+  on=true;btn.className='on';btn.setAttribute('aria-label','关闭音乐');
+}
+function stop(){if(timer){clearInterval(timer);timer=null;}on=false;btn.className='off';btn.setAttribute('aria-label','打开音乐');}
+btn.addEventListener('click',function(e){e.stopPropagation();started=true;on?stop():play();});
+function first(){if(started)return;started=true;play();
+  ['touchstart','touchend','click','keydown'].forEach(function(ev){document.removeEventListener(ev,first,true)});}
+['touchstart','touchend','click','keydown'].forEach(function(ev){document.addEventListener(ev,first,true)});
+document.addEventListener('visibilitychange',function(){if(!ctx)return;if(document.hidden)ctx.suspend();else if(on)ctx.resume();});
+})();
+</script></body></html>
